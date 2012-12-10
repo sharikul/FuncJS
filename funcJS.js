@@ -4,7 +4,7 @@ This is the uncompressed version of FuncJS by Sharikul Islam.
 	* Official site at http://funcjs.webege.com,
 	* Main documentation at http://docs.funcjs.webege.com.
 
-	- Last updated on 16 Nov 2012
+	- Last updated on 10 Dec 2012
 	
 
 */
@@ -304,7 +304,7 @@ else if(c.match(/<\s*\w.*?>/g) && c.match(/<\/\w+>/g)) {
 		return false;
 	}
 }
-function htmlentities(elem) {
+function show_tags(elem) {
 //Function documentation at http://docs.funcjs.webege.com/htmlentities().html
 	if(elem!==null) {
 	if(typeof elem === "string") {
@@ -359,13 +359,25 @@ function grab(e) {
 	} else if(e.match(/\../)) {
 //remove the "." from the string 
 		var re = e.replace(".", "");
+if(get("class", re).length ===1) {
+	return get("class", re)[0];
+} else {
 		return get("class", re);
+}
 	} else {
 //if a hash or dot symbol isn't specified, it can mean that the user is looking to grab an element either by its name or tag name
 		if(get("name", e)[0]!==undefined) {
+if(get("name", e).length===1) {
+	return get("name", e)[0];
+} else {
 			return get("name", e);
+}
 		} else {
+if(get("tag", e).length===1) {
+	return get("tag", e)[0];
+} else {
 			return get("tag", e);
+}
 		}
 	}
 }
