@@ -1,3 +1,4 @@
+##CoffeeScript file by Sharikul Islam. This release: January 2013
 echo = (e) ->
   unless e is null or e is "" or e is undefined
     document.write e
