@@ -68,7 +68,7 @@ down = (s) ->
     else
       alert "'#{s}' isn't a string."
   else
-    throw new Error "The 'up' function expects one argument. No arguments have been specified."
+    throw new Error "The 'down' function expects one argument. No arguments have been specified."
 store = (t, m, k, v) ->
   unless t is undefined or m is undefined or k is undefined or t is null or m is null or k is null or t is "" or m is "" or k is ""
     type = t
@@ -77,7 +77,7 @@ store = (t, m, k, v) ->
     value = v
     if type is "session"
       if method is "set"
-        if key isnt null and value isnt null or key isnt "" and key isnt ""
+        if key isnt null and value isnt null or key isnt "" and value isnt ""
           return sessionStorage.setItem key, value
         else
           throw new Error "A key and its value MUST be specified!"
@@ -93,7 +93,7 @@ store = (t, m, k, v) ->
           sessionStorage.removeItem key
     else if type is "local"
       if method is "set"
-        if key isnt null and value isnt null or key isnt "" and key isnt ""
+        if key isnt null and value isnt null or key isnt "" and value isnt ""
           return localStorage.setItem key, value
         else
           throw new Error "A key and its value MUST be specified!"
