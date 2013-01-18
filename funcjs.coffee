@@ -155,7 +155,10 @@ grab = (e) ->
     else
       throw new Error "The 'grab' function expects one argument, which hasn't been specified."
   catch err
-    alert err
+    if err instanceof DOMException
+      alert "Notice to developer: The argument string '#{e}' is illegal to provide. Here's the full stack: \n\n #{err.stack}"
+    else
+      alert err
 trim = (e) ->
   unless typeof e isnt "string" or e is undefined or e is "" or e is null
     _trim = e
