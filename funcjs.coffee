@@ -118,41 +118,44 @@ str_rev = (s) ->
   else
     throw new Error "The 'str_rev' function expects one argument."
 grab = (e) ->
-  unless e is undefined or e is null or e is "" or typeof e is "undefined"
-    if typeof e is "string"
+  try 
+    unless e is undefined or e is null or e is "" or typeof e is "undefined"
+      if typeof e is "string"
       #query select the document for ID's and classes
-      return_val = document.querySelectorAll e
-      if return_val.length is 1
+        return_val = document.querySelectorAll e
+        if return_val.length is 1
         #if the return_val array's length is one element, return that one element, bringing it out of an array
-        return return_val[0]
-      else if return_val.length > 1
+          return return_val[0]
+        else if return_val.length > 1
         #just return the entire array, if the array is populated with elements
-        return return_val
-      else
-        #if there's no results matched from above, it can mean that an element is being searched for by its name attribute or tag name
-        _tag = document.getElementsByTagName e
-        _name = document.getElementsByName e
-        if _tag.length is 1 or _tag.length > 1 and _name.length is 1 or _name.length > 1
-          #if both arrays have one or more elements, give more priority to the tag
-          if _tag.length is 1
-            return _tag[0]
-          else
-            return _tag
+          return return_val
         else
-          if _tag.length is 1 or _tag.length > 1 and _name.length is 0
+        #if there's no results matched from above, it can mean that an element is being searched for by its name attribute or tag name
+          _tag = document.getElementsByTagName e
+          _name = document.getElementsByName e
+          if _tag.length is 1 or _tag.length > 1 and _name.length is 1 or _name.length > 1
+          #if both arrays have one or more elements, give more priority to the tag
             if _tag.length is 1
               return _tag[0]
             else
               return _tag
-          else
-            if _name.length is 1
+          else if _tag.length is 1 or _tag.length > 1 and _name.length is 0
+            if _tag.length is 1
+               return _tag[0]
+            else if _tag.length > 1
+              return _tag
+            else if _name.length is 1
               return _name[0]
-            else
+            else if _name.length > 1
               return _name
+          else
+            throw new Error "Notice to developer: Couldn't find any element in the DOM (Document Object Model) matching '#{e}'. \n\nError thrown from the 'grab' function."
+      else
+        throw new TypeError "Please encapsulate the function arguments within speech marks."
     else
-      throw new TypeError "Please encapsulate the function arguments within speech marks."
-  else
-    throw new Error "The 'grab' function expects one argument, which hasn't been specified."
+      throw new Error "The 'grab' function expects one argument, which hasn't been specified."
+  catch err
+    alert err
 trim = (e) ->
   unless typeof e isnt "string" or e is undefined or e is "" or e is null
     _trim = e
