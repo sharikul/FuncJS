@@ -154,6 +154,11 @@ grab = (e) ->
 			alert err.stack
 		else
 			alert err
+trim = (e) ->
+	unless e is "" or e is null or e is undefined
+		return e.replace(/^\s+/, "").replace /\s+$/, ""
+	else
+		throw new Error "Please specify an argument!"
 count = (e) ->
   unless e is "" or e is null or e is undefined
     if typeof e is "string"
