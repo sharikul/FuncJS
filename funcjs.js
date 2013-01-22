@@ -278,7 +278,7 @@ show_tags = function(e) {
     try {
       if (typeof _convert === "string") {
         if (_convert.match(/</g) && _convert.match(/>/g)) {
-          _tag = _convert.replace(/</g, "&lt;").replace(/>/g, "&gt;"));
+          _tag = _convert.replace(/</g, "&lt;").replace(/>/g, "&gt;");
           return trim(_tag);
         } else {
           throw new ReferenceError("Can't detect any tags inside '" + _convert + "'");
