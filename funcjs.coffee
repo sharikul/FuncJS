@@ -118,58 +118,42 @@ str_rev = (s) ->
   else
     throw new Error "The 'str_rev' function expects one argument."
 grab = (e) ->
-  try 
-    unless e is undefined or e is null or e is "" or typeof e is "undefined"
-      if typeof e is "string"
-      #query select the document for ID's and classes
-        return_val = document.querySelectorAll e
-        if return_val.length is 1
-        #if the return_val array's length is one element, return that one element, bringing it out of an array
-          return return_val[0]
-        else if return_val.length > 1
-        #just return the entire array, if the array is populated with elements
-          return return_val
-        else
-        #if there's no results matched from above, it can mean that an element is being searched for by its name attribute or tag name
-          _tag = document.getElementsByTagName e
-          _name = document.getElementsByName e
-          if _tag.length is 1 or _tag.length > 1 and _name.length is 1 or _name.length > 1
-          #if both arrays have one or more elements, give more priority to the tag
-            if _tag.length is 1
-              return _tag[0]
-            else
-              return _tag
-          else if _tag.length is 1 or _tag.length > 1 and _name.length is 0
-            if _tag.length is 1
-               return _tag[0]
-            else if _tag.length > 1
-              return _tag
-            else if _name.length is 1
-              return _name[0]
-            else if _name.length > 1
-              return _name
-          else
-            throw new Error "Notice to developer: Couldn't find any element in the DOM (Document Object Model) matching '#{e}'. \n\nError thrown from the 'grab' function."
-      else
-        throw new TypeError "Please encapsulate the function arguments within speech marks."
-    else
-      throw new Error "The 'grab' function expects one argument, which hasn't been specified."
-  catch err
-    if err instanceof DOMException
-      alert "Notice to developer: The argument string '#{e}' is illegal to provide. Here's the full stack: \n\n #{err.stack}"
-    else
-      alert err
-trim = (e) ->
-  unless typeof e isnt "string" or e is undefined or e is "" or e is null
-    _trim = e
-    if _trim.match(/^\s+/) or _trim.match /\s+$/
-      _trim = _trim.replace /^\s+/, ""
-      _trim = _trim.replace /\s+$/, ""
-      return _trim
-    else
-      return _trim
-  else
-    throw new TypeError "Please provide an argument within speech marks"
+	try 
+		unless typeof e is undefined or e is "" or e is ""
+			_e = e
+			if typeof _e is "string"
+				query = document.querySelectorAll _e
+				if query.length is 1 or query.length > 1
+					if query.length is 1
+						return query[0]
+					else
+						return query
+				else if query.length is 0
+					_tag = document.getElementsByTagName _e
+					_name = document.getElementsByName _e
+					if _tag.length isnt 0 or _name.length isnt 0
+						if _tag.length is 1 or _tag.length > 1
+							if _tag.length is 1
+								return _tag[0]
+							else
+								return _tag
+						else
+							if _name.length is 1 or _name.length > 1
+								if _name.length is 1
+									return _name[0]
+								else
+									return name
+				else
+					throw new Error "Couldn't find any element in the DOM matching #{_e}"
+			else
+				throw new Error "The 'grab' function expects arguments provided within speech marks."
+		else
+			throw new ReferenceError "Please provide an argument"
+	catch err
+		if err instanceof DOMException
+			alert err.stack
+		else
+			alert err
 count = (e) ->
   unless e is "" or e is null or e is undefined
     if typeof e is "string"
@@ -215,9 +199,8 @@ show_tags = (e) ->
     try
       if typeof _convert is "string"
         if _convert.match (/</g) and _convert.match (/>/g)
-          _tag = _convert.replace /</g, "&lt;"
-          _final_conv = _tag.replace />/g, "&gt;"
-          return trim _final_conv
+          _tag = _convert.replace /</g, "&lt;".replace />/g, "&gt;"
+          return trim _tag
         else
           throw new ReferenceError "Can't detect any tags inside '#{_convert}'"
       else if typeof _convert is "object"
@@ -234,3 +217,11 @@ show_tags = (e) ->
       alert err.message
   else
     throw new Error "The 'show_tags' function expects one parameter being string or object data."
+toggle = (e) ->
+	unless e is undefined or e is "" or e is null
+		if e.style.display is "none"
+			e.style.display = "block"
+		else
+			e.style.display = "none"
+	else
+		throw new Error "Please provide an argument!"
