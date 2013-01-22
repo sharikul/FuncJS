@@ -277,7 +277,7 @@ show_tags = function(e) {
     _convert = e;
     try {
       if (typeof _convert === "string") {
-        if (_convert.match(/</g) && _convert.match(/>/g))) {
+        if (_convert.match(/</g) && _convert.match(/>/g)) {
           _tag = _convert.replace(/</g, "&lt;").replace(/>/g, "&gt;"));
           return trim(_tag);
         } else {
@@ -285,7 +285,7 @@ show_tags = function(e) {
         }
       } else if (typeof _convert === "object") {
         _convert_string = _convert.outerHTML;
-        if (_convert_string.match(/</g) && _convert_string.match(/>/g))) {
+        if (_convert_string.match(/</g) && _convert_string.match(/>/g)) {
           _tag = _convert_string.replace(/</g, "&lt;").replace(/>/g, "&gt;");
           return trim(_tag);
         } else {
