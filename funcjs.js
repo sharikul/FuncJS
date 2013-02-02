@@ -171,50 +171,43 @@ str_rev = function(s) {
 };
 
 grab = function(e) {
-  var query, _e, _name, _tag;
+  var name, q, tag;
   try {
-    if (!(typeof e === void 0 || e === "" || e === "")) {
-      _e = e;
-      if (typeof _e === "string") {
-        query = document.querySelectorAll(_e);
-        if (query.length === 1 || query.length > 1) {
-          if (query.length === 1) {
-            return query[0];
-          } else {
-            return query;
-          }
-        } else if (query.length === 0) {
-          _tag = document.getElementsByTagName(_e);
-          _name = document.getElementsByName(_e);
-          if (_tag.length !== 0 || _name.length !== 0) {
-            if (_tag.length === 1 || _tag.length > 1) {
-              if (_tag.length === 1) {
-                return _tag[0];
-              } else {
-                return _tag;
-              }
-            } else {
-              if (_name.length === 1 || _name.length > 1) {
-                if (_name.length === 1) {
-                  return _name[0];
-                } else {
-                  return name;
-                }
-              }
-            }
-          }
+    if (!(typeof e === void 0 || e === "" || e === null || typeof e !== "string")) {
+      q = document.querySelectorAll(e);
+      if (q.length === 1 || q.length > 1) {
+        if (q.length === 1) {
+          return q[0];
         } else {
-          throw new Error("Couldn't find any element in the DOM matching " + _e);
+          return q;
+        }
+      } else if (q.length === 0) {
+        tag = document.getElementsByTagName(e);
+        name = document.getElementsByName(e);
+        if (tag.length === 1 && name.length === 1) {
+          return Array(tag[0], name[0]);
+        } else if (tag.length > 1 && name.length > 1) {
+          return Array(tag, name);
+        } else if (tag.length === 0 && name.length === 1) {
+          return name[0];
+        } else if (tag.length === 0 && name.length > 1) {
+          return name;
+        } else if (tag.length === 1 && name.length === 0) {
+          return tag[0];
+        } else if (tag.length > 1 && name.length === 0) {
+          return name;
+        } else {
+          throw new Error("I'm confused");
         }
       } else {
-        throw new Error("The 'grab' function expects arguments provided within speech marks.");
+        throw new Error("Couldn't find '" + e + "' anywhere in the DOM (Document Object Model). Sorry");
       }
     } else {
-      throw new ReferenceError("Please provide an argument");
+      throw new TypeError("The argument provided must be encapsulated in speech marks");
     }
   } catch (err) {
     if (err instanceof DOMException) {
-      return alert(err.stack);
+      return alert("'" + e + "' isn't a legal argument to provide. Here's the full error stack: \n\n" + err.stack);
     } else {
       return alert(err);
     }
