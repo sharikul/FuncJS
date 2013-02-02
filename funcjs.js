@@ -1,4 +1,4 @@
-//FuncJS by Sharikul Islam. This release: January 2013
+// FuncJS by Sharikul Islam. Release: January 2013;updated February 2013
 var count, down, echo, function_exists, grab, show_tags, store, str_replace, str_rev, strip_tags, strlen, strpos, toggle, trim, up;
 
 echo = function(e) {
@@ -285,17 +285,18 @@ show_tags = function(e) {
     _convert = e;
     try {
       if (typeof _convert === "string") {
-        if (_convert.match(/</g) && _convert.match(/>/g)) {
-          _tag = _convert.replace(/</g, "&lt;").replace(/>/g, "&gt;");
+        if (_convert.match(/</g && _convert.match(/>/g))) {
+          _tag = _convert.replace(/</g, "&lt;".replace(/>/g, "&gt;"));
           return trim(_tag);
         } else {
           throw new ReferenceError("Can't detect any tags inside '" + _convert + "'");
         }
       } else if (typeof _convert === "object") {
         _convert_string = _convert.outerHTML;
-        if (_convert_string.match(/</g) && _convert_string.match(/>/g)) {
-          _tag = _convert_string.replace(/</g, "&lt;").replace(/>/g, "&gt;");
-          return trim(_tag);
+        if (_convert_string.match(/</g && _convert_string.match(/>/g))) {
+          _tag = _convert_string.replace(/</g, "&lt;");
+          _final_conv = _tag.replace(/>/g, "&gt;");
+          return trim(_final_conv);
         } else {
           throw new ReferenceError("Can't detect any tags inside '" + _convert + "'");
         }

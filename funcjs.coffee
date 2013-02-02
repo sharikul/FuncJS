@@ -118,42 +118,40 @@ str_rev = (s) ->
   else
     throw new Error "The 'str_rev' function expects one argument."
 grab = (e) ->
-	try 
-		unless typeof e is undefined or e is "" or e is ""
-			_e = e
-			if typeof _e is "string"
-				query = document.querySelectorAll _e
-				if query.length is 1 or query.length > 1
-					if query.length is 1
-						return query[0]
-					else
-						return query
-				else if query.length is 0
-					_tag = document.getElementsByTagName _e
-					_name = document.getElementsByName _e
-					if _tag.length isnt 0 or _name.length isnt 0
-						if _tag.length is 1 or _tag.length > 1
-							if _tag.length is 1
-								return _tag[0]
-							else
-								return _tag
-						else
-							if _name.length is 1 or _name.length > 1
-								if _name.length is 1
-									return _name[0]
-								else
-									return name
-				else
-					throw new Error "Couldn't find any element in the DOM matching #{_e}"
-			else
-				throw new Error "The 'grab' function expects arguments provided within speech marks."
-		else
-			throw new ReferenceError "Please provide an argument"
-	catch err
-		if err instanceof DOMException
-			alert err.stack
-		else
-			alert err
+  try
+    unless typeof e is undefined or e is "" or e is null or typeof e isnt "string"
+      q = document.querySelectorAll e
+      if q.length is 1 or q.length > 1
+        if q.length is 1
+            return q[0]
+        else
+            return q
+      else if q.length is 0
+        tag = document.getElementsByTagName e
+        name = document.getElementsByName e
+        if tag.length is 1 and name.length is 1
+          return Array tag[0], name[0]
+        else if tag.length > 1 and name.length > 1
+          return Array tag, name
+        else if tag.length is 0 and name.length is 1
+          return name[0]
+        else if tag.length is 0 and name.length > 1
+          return name
+        else if tag.length is 1 and name.length is 0
+          return tag[0]
+        else if tag.length > 1 and name.length is 0
+          return name
+        else
+            throw new Error "I'm confused"
+      else
+        throw new Error "Couldn't find '#{e}' anywhere in the DOM (Document Object Model). Sorry"
+    else
+      throw new TypeError "The argument provided must be encapsulated in speech marks"
+  catch err
+    if err instanceof DOMException
+      alert "'#{e}' isn't a legal argument to provide. Here's the full error stack: \n\n#{err.stack}"
+    else
+      alert err
 trim = (e) ->
 	unless e is "" or e is null or e is undefined
 		return e.replace(/^\s+/, "").replace /\s+$/, ""
