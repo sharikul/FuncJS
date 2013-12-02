@@ -239,37 +239,23 @@ count = function(e) {
 };
 
 strip_tags = function(e) {
-  var closing_tag, opening_tag, _tag_object, _tag_string;
-  if (!(e === void 0 || e === null || e === "")) {
-    _tag_string = e;
-    if (typeof _tag_string === "string") {
-      opening_tag = _tag_string.match(/<[A-Za-z0-9='"\s+]+>/g);
-      closing_tag = _tag_string.match(/<\/[A-Za-z0-9='"\s+]+>/g);
-      if (opening_tag && opening_tag) {
-        _tag_string = _tag_string.replace(/<[A-Za-z0-9='"\s+]+>/g, "");
-        _tag_string = _tag_string.replace(/<\/[A-Za-z0-9='"\s+]+>/g, "");
-        return trim(_tag_string);
-      } else {
-        throw new TypeError("The provided argument doesn't look like it has tags within it.");
-      }
-    } else {
-      if (typeof _tag_string === "object") {
-        _tag_object = _tag_string.outerHTML;
-        _tag_object = _tag_object.replace(/\n/g, "");
-        opening_tag = _tag_object.match(/<[A-Za-z0-9='"\s+]+>/g);
-        closing_tag = _tag_object.match(/<\/[A-Za-z0-9='"\s+]+>/g);
-        if (opening_tag && closing_tag) {
-          _tag_object = _tag_object.replace(/<[A-Za-z0-9='"\s+]+>/g, "");
-          _tag_object = _tag_object.replace(/<\/[A-Za-z0-9='"\s+]+>/g, "");
-          return trim(_tag_object);
-        } else {
-          throw new TypeError("The provided argument doesn't look like it has tags within it.");
+    var _hasTag, _tag_string;
+    if (!(e === void 0 || e === null || e === "")) {
+        _tag_string = e;
+        if (typeof _tag_string === "object") {
+            _tag_string = _tag_string.outerHTML;
         }
-      }
+        _hasTag = _tag_string.match(/(<([^>]+)>)/ig);
+
+        if (_hasTag) {
+            return trim(_tag_string.replace(/(<([^>]+)>)/ig, ''));
+        } else {
+            return trim(_tag_string);
+        }
     }
-  } else {
-    throw new Error("The 'strip_tags' function expects one argument in the form of a string or object.");
-  }
+    else {
+        throw new Error("The 'strip_tags' function expects one argument in the form of a string or object.");
+    }
 };
 
 show_tags = function(e) {
