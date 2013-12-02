@@ -31,15 +31,6 @@ function_exists = function(fn) {
   }
 };
 
-strlen = function(e) {
-  if (!(e === null || e === "" || e === void 0 || typeof e !== "string")) {
-    return e.length;
-  } else {
-    alert("" + e + " is NOT string data!");
-    throw new TypeError("" + e + " isn't a string");
-  }
-};
-
 strpos = function(n, h) {
   var error, haystack, needle;
   if (!(n === void 0 || h === void 0 || n === null || h === null || n === "" || h === "")) {
@@ -78,30 +69,6 @@ str_replace = function(o, n, s) {
     }
   } else {
     throw new Error("The 'str_replace' function expects three arguments.");
-  }
-};
-
-up = function(s) {
-  if (!(s === void 0 || s === "" || s === null)) {
-    if (typeof s === "string") {
-      return s.toUpperCase();
-    } else {
-      return alert("'" + s + "' isn't a string.");
-    }
-  } else {
-    throw new Error("The 'up' function expects one argument. No arguments have been specified.");
-  }
-};
-
-down = function(s) {
-  if (!(s === void 0 || s === "" || s === null)) {
-    if (typeof s === "string") {
-      return s.toLowerCase();
-    } else {
-      return alert("'" + s + "' isn't a string.");
-    }
-  } else {
-    throw new Error("The 'down' function expects one argument. No arguments have been specified.");
   }
 };
 
