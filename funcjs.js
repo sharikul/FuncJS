@@ -31,15 +31,6 @@ function_exists = function(fn) {
   }
 };
 
-strlen = function(e) {
-  if (!(e === null || e === "" || e === void 0 || typeof e !== "string")) {
-    return e.length;
-  } else {
-    alert("" + e + " is NOT string data!");
-    throw new TypeError("" + e + " isn't a string");
-  }
-};
-
 strpos = function(n, h) {
   var error, haystack, needle;
   if (!(n === void 0 || h === void 0 || n === null || h === null || n === "" || h === "")) {
@@ -78,30 +69,6 @@ str_replace = function(o, n, s) {
     }
   } else {
     throw new Error("The 'str_replace' function expects three arguments.");
-  }
-};
-
-up = function(s) {
-  if (!(s === void 0 || s === "" || s === null)) {
-    if (typeof s === "string") {
-      return s.toUpperCase();
-    } else {
-      return alert("'" + s + "' isn't a string.");
-    }
-  } else {
-    throw new Error("The 'up' function expects one argument. No arguments have been specified.");
-  }
-};
-
-down = function(s) {
-  if (!(s === void 0 || s === "" || s === null)) {
-    if (typeof s === "string") {
-      return s.toLowerCase();
-    } else {
-      return alert("'" + s + "' isn't a string.");
-    }
-  } else {
-    throw new Error("The 'down' function expects one argument. No arguments have been specified.");
   }
 };
 
@@ -239,37 +206,23 @@ count = function(e) {
 };
 
 strip_tags = function(e) {
-  var closing_tag, opening_tag, _tag_object, _tag_string;
-  if (!(e === void 0 || e === null || e === "")) {
-    _tag_string = e;
-    if (typeof _tag_string === "string") {
-      opening_tag = _tag_string.match(/<[A-Za-z0-9='"\s+]+>/g);
-      closing_tag = _tag_string.match(/<\/[A-Za-z0-9='"\s+]+>/g);
-      if (opening_tag && opening_tag) {
-        _tag_string = _tag_string.replace(/<[A-Za-z0-9='"\s+]+>/g, "");
-        _tag_string = _tag_string.replace(/<\/[A-Za-z0-9='"\s+]+>/g, "");
-        return trim(_tag_string);
-      } else {
-        throw new TypeError("The provided argument doesn't look like it has tags within it.");
-      }
-    } else {
-      if (typeof _tag_string === "object") {
-        _tag_object = _tag_string.outerHTML;
-        _tag_object = _tag_object.replace(/\n/g, "");
-        opening_tag = _tag_object.match(/<[A-Za-z0-9='"\s+]+>/g);
-        closing_tag = _tag_object.match(/<\/[A-Za-z0-9='"\s+]+>/g);
-        if (opening_tag && closing_tag) {
-          _tag_object = _tag_object.replace(/<[A-Za-z0-9='"\s+]+>/g, "");
-          _tag_object = _tag_object.replace(/<\/[A-Za-z0-9='"\s+]+>/g, "");
-          return trim(_tag_object);
-        } else {
-          throw new TypeError("The provided argument doesn't look like it has tags within it.");
+    var _hasTag, _tag_string;
+    if (!(e === void 0 || e === null || e === "")) {
+        _tag_string = e;
+        if (typeof _tag_string === "object") {
+            _tag_string = _tag_string.outerHTML;
         }
-      }
+        _hasTag = _tag_string.match(/(<([^>]+)>)/ig);
+
+        if (_hasTag) {
+            return trim(_tag_string.replace(/(<([^>]+)>)/ig, ''));
+        } else {
+            return trim(_tag_string);
+        }
     }
-  } else {
-    throw new Error("The 'strip_tags' function expects one argument in the form of a string or object.");
-  }
+    else {
+        throw new Error("The 'strip_tags' function expects one argument in the form of a string or object.");
+    }
 };
 
 show_tags = function(e) {
